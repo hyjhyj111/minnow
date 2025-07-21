@@ -1,6 +1,8 @@
+#include "address.hh"
 #include "socket.hh"
 
 #include <cstdlib>
+#include <format>
 #include <iostream>
 #include <span>
 #include <string>
@@ -9,8 +11,22 @@ using namespace std;
 
 void get_URL( const string& host, const string& path )
 {
-  cerr << "Function called: get_URL(" << host << ", " << path << ")\n";
-  cerr << "Warning: get_URL() has not been implemented yet.\n";
+  auto address = Address(host, "http");
+  TCPSocket socket;
+  socket.connect(address);
+  
+  std::vector<std::string> vec;
+  vec.push_back(std::format("GET {} HTTP/1.1\r\n", path));
+  vec.push_back(std::format("host: {}\r\n", host));
+  vec.push_back("Connection: close\r\n\r\n");
+  socket.write(vec);
+
+  std::string buff;
+  while (!socket.eof()) {
+    socket.read(buff);
+    std::cout << buff;
+  }
+
 }
 
 int main( int argc, char* argv[] )
