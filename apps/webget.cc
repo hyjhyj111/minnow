@@ -11,22 +11,21 @@ using namespace std;
 
 void get_URL( const string& host, const string& path )
 {
-  auto address = Address(host, "http");
+  auto address = Address( host, "http" );
   TCPSocket socket;
-  socket.connect(address);
-  
+  socket.connect( address );
+
   std::vector<std::string> vec;
-  vec.push_back(std::format("GET {} HTTP/1.1\r\n", path));
-  vec.push_back(std::format("host: {}\r\n", host));
-  vec.push_back("Connection: close\r\n\r\n");
-  socket.write(vec);
+  vec.push_back( std::format( "GET {} HTTP/1.1\r\n", path ) );
+  vec.push_back( std::format( "host: {}\r\n", host ) );
+  vec.push_back( "Connection: close\r\n\r\n" );
+  socket.write( vec );
 
   std::string buff;
-  while (!socket.eof()) {
-    socket.read(buff);
+  while ( !socket.eof() ) {
+    socket.read( buff );
     std::cout << buff;
   }
-
 }
 
 int main( int argc, char* argv[] )

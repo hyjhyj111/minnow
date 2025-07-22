@@ -17,6 +17,7 @@ NetworkInterface::NetworkInterface( string_view name,
   , ethernet_address_( ethernet_address )
   , ip_address_( ip_address )
 {
+  (void)ethernet_address_;
   cerr << "DEBUG: Network interface has Ethernet address " << to_string( ethernet_address ) << " and IP address "
        << ip_address.ip() << "\n";
 }
