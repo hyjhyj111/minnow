@@ -1,8 +1,10 @@
 #pragma once
 
+#include "byte_stream.hh"
 #include "reassembler.hh"
 #include "tcp_receiver_message.hh"
 #include "tcp_sender_message.hh"
+#include "wrapping_integers.hh"
 
 class TCPReceiver
 {
@@ -27,4 +29,6 @@ public:
 
 private:
   Reassembler reassembler_;
+  Wrap32 zero_wrap_ { 0 };
+  bool rec_syn { false };
 };
